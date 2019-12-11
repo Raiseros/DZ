@@ -14,7 +14,7 @@ public class Main {
 
 
         Gameplay gameplay = new Gameplay();
-        gameplay.Game();
+        gameplay.playGame();
 
 
 

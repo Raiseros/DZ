@@ -7,41 +7,41 @@ import java.util.Scanner;
  */
 public class Field {
 
-    private  char[][] field;
+    private  char[][] fieldHolder;
 
     public char[][] getField() {
-        return field;
+        return fieldHolder;
     }
 
-    public void setField(char[][] field) {
-        this.field = field;
-    }
-
-    public  char[][] NewField () {
+    public Field() {
         int rowNum = 3;
         int columnNum = 3;
-        char[][] NewField = new char[rowNum][columnNum];
+        fieldHolder = new char[rowNum][columnNum];
         for (int a = 0; a < rowNum; a++) {
             for (int b = 0; b < columnNum; b++) {
-                NewField[a][b] = '*';
+                fieldHolder[a][b] = '*';
 
             }
         }
-        return NewField;
+    }
+
+    public void setField(char[][] field) {
+        this.fieldHolder = field;
     }
 
 
-    public  char[][] PrintField (char[][] NewField){
-        char[][] PrintField = NewField;
 
-        for (int a = 0; a < PrintField.length; a++) {
-            for (int b = 0; b < PrintField.length; b++) {
-                System.out.print(PrintField[a][b] + "\t");
+    public void printField(){
+
+
+        for (int a = 0; a < fieldHolder.length; a++) {
+            for (int b = 0; b < fieldHolder.length; b++) {
+                System.out.print(fieldHolder[a][b] + "\t");
 
             }
             System.out.print("\n");
         }
-        return PrintField;
+
     }
 
 }

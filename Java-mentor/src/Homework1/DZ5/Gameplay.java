@@ -8,66 +8,57 @@ import java.util.Scanner;
 public class Gameplay {
     private char[][] gameField;
 
-    public char[][] getGameField() {
-        return gameField;
-    }
 
-    public void setGameField(char[][] gameField) {
-        this.gameField = gameField;
-    }
+    public void playGame() {
 
-    public void Game() {
-        System.out.print("\n");
-        System.out.println("Вас приветствует игра крестики-нолики! Попробуйте обыграть ANDREY)");
-        System.out.print("\n");
+        System.out.println("\nВас приветсвует игра крестики-нолики! Попробуйте обыграть ANDREY)\n");
+
 
         Field field = new Field();
-        field.setField(field.PrintField(field.NewField()));
+        field.printField();
         Player player = new Player();
         player.setPlayerField(field.getField());
-        setGameField(player.getPlayerField());
+        gameField = player.getPlayerField();
 
-        while (!WinnerPlayer(getGameField()) && !WinnerComputer(getGameField()) && !DrawGame(getGameField())){
 
-            player.PlayerAction(player.getPlayerField());
+        while (!isWin('X') && !isWin('0') && !getDrawGame(gameField)){
 
-            if(!WinnerPlayer(getGameField()) && !WinnerComputer(getGameField()) && !DrawGame(getGameField())){
-                player.ComputerAction(player.getPlayerField());
-                setGameField(player.getPlayerField());
+            player.getPlayerAction(player.getPlayerField());
+
+            if(!isWin('X') && !isWin('0') && !getDrawGame(gameField)){
+                player.getComputerAction(player.getPlayerField());
+                gameField = player.getPlayerField();
             }
-            if (WinnerPlayer(getGameField())){
-                System.out.print("\n");
-                System.out.println("Выиграл Игрок, Поздравляем!!)");
+            if (isWin('X')){
+                System.out.println("\nВыиграл Игрок, Поздравляем!!)");
             }
-            if (WinnerComputer(getGameField())){
-                System.out.print("\n");
-                System.out.println("ВЫИГРАЛ Искусственный интеллект ANDREY, Вы ЛУЗЕР ) ахах !!)");
+            if (isWin('0')){
+                System.out.println("\nВЫИГРАЛ Искусственный интеллект ANDREY, Вы ЛУЗЕР ) ахах !!)");
             }
-           if(DrawGame(getGameField())){
-               System.out.print("\n");
-               System.out.println("Вы не смогли обыграть искусственный интеллект ANDREY !!  НИЧЬЯ!!))");
+           if(getDrawGame(gameField)){
+               System.out.println("\nВы не смогли обыграть искусственный интеллект ANDREY !!  НИЧЬЯ!!))");
            }
         }
-        System.out.print("\n");
-        System.out.println("GAME OVER!!");
+
+        System.out.println("\nGAME OVER!!");
 
         Scanner in = new Scanner(System.in);
         int a = 0;
 
-            System.out.print("\n");
-            System.out.println("Хотите еще раз попробовать обыграть Andrey? Да - 1 ; Нет - 0 и нажмите ENTER : ");
-            System.out.print("\n");
+
+            System.out.println("\nХотите еще раз попробовать обыграть Andrey? Да - 1 ; Нет - 0 и нажмите ENTER : \n");
+
             a = in.nextInt();
-            System.out.print("\n");
+
             while (a != 1 && a != 0) {
-                System.out.print("\n");
-                System.out.println("Данные введены некорректно, введите 0 или 1!! ");
+
+                System.out.println("\nДанные введены некорректно, введите 0 или 1!! \n");
                 a = in.nextInt();
-                System.out.print("\n");
+
             }
 
         if(a == 1){
-            Game();
+            playGame();
         } else{
             System.out.println("СПАСИБО ЗА ИГРУ!");
             return;
@@ -75,76 +66,43 @@ public class Gameplay {
 
     }
 
-    public boolean WinnerPlayer(char[][] gameField) {
-        char[][] WinnerPlayer = gameField;
+    public boolean isWin(char simbol) {
 
-        if(WinnerPlayer[0][0] == 'X' && WinnerPlayer[0][1] == 'X' && WinnerPlayer[0][2] == 'X' ){
+
+        if(gameField[0][0] == simbol && gameField[0][1] == simbol && gameField[0][2] == simbol ){
             return true;
         }
-        if(WinnerPlayer[0][0] == 'X' && WinnerPlayer[1][0] == 'X' && WinnerPlayer[2][0] == 'X' ){
+        if(gameField[0][0] == simbol && gameField[1][0] == simbol && gameField[2][0] == simbol ){
             return true;
         }
-        if(WinnerPlayer[2][0] == 'X' && WinnerPlayer[2][1] == 'X' && WinnerPlayer[2][2] == 'X' ){
+        if(gameField[2][0] == simbol && gameField[2][1] == simbol && gameField[2][2] == simbol ){
             return true;
         }
-        if(WinnerPlayer[0][2] == 'X' && WinnerPlayer[1][2] == 'X' && WinnerPlayer[2][2] == 'X' ){
+        if(gameField[0][2] == simbol && gameField[1][2] == simbol && gameField[2][2] == simbol ){
             return true;
         }
-        if(WinnerPlayer[0][0] == 'X' && WinnerPlayer[1][1] == 'X' && WinnerPlayer[2][2] == 'X' ){
+        if(gameField[0][0] == simbol && gameField[1][1] == simbol && gameField[2][2] == simbol ){
             return true;
         }
-        if(WinnerPlayer[0][2] == 'X' && WinnerPlayer[1][1] == 'X' && WinnerPlayer[2][0] == 'X' ){
+        if(gameField[0][2] == simbol && gameField[1][1] == simbol && gameField[2][0] == simbol ){
             return true;
         }
-        if(WinnerPlayer[1][0] == 'X' && WinnerPlayer[1][1] == 'X' && WinnerPlayer[1][2] == 'X' ){
+        if(gameField[1][0] == simbol && gameField[1][1] == simbol && gameField[1][2] == simbol ){
             return true;
         }
 
-        if(WinnerPlayer[0][1] == 'X' && WinnerPlayer[1][1] == 'X' && WinnerPlayer[2][1] == 'X' ){
+        if(gameField[0][1] == simbol && gameField[1][1] == simbol && gameField[2][1] == simbol ){
             return true;
         }
         
         return false;
     }
 
-    public boolean WinnerComputer(char[][] gameField) {
-        
-        char[][] WinnerComputer = gameField;
-        
-        if(WinnerComputer[0][0] == '0' && WinnerComputer[0][1] == '0' && WinnerComputer[0][2] == '0' ){
-            return true;
-        }
-        if(WinnerComputer[0][0] == '0' && WinnerComputer[1][0] == '0' && WinnerComputer[2][0] == '0' ){
-            return true;
-        }
-        if(WinnerComputer[2][0] == '0' && WinnerComputer[2][1] == '0' && WinnerComputer[2][2] == '0' ){
-            return true;
-        }
-        if(WinnerComputer[0][2] == '0' && WinnerComputer[1][2] == '0' && WinnerComputer[2][2] == '0' ){
-            return true;
-        }
-        if(WinnerComputer[0][0] == '0' && WinnerComputer[1][1] == '0' && WinnerComputer[2][2] == '0' ){
-            return true;
-        }
-        if(WinnerComputer[0][2] == '0' && WinnerComputer[1][1] == '0' && WinnerComputer[2][0] == '0' ){
-            return true;
-        }
-        if(WinnerComputer[1][0] == '0' && WinnerComputer[1][1] == '0' && WinnerComputer[1][2] == '0' ){
-            return true;
-        }
-        if(WinnerComputer[0][1] == '0' && WinnerComputer[1][1] == '0' && WinnerComputer[2][1] == '0' ){
-            return true;
-        }
-        
-        return false;
-    }
-    
-    
 
-    public boolean DrawGame(char[][] gameField) {
-        char[][] DrawGame = gameField;
 
-        for (char[] a : DrawGame) {
+    public boolean getDrawGame(char[][] gameField) {
+
+        for (char[] a : gameField) {
             for (char i : a){
                 if (i != 'X' && i != '0'){
                     return false;
