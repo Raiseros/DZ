@@ -1,0 +1,27 @@
+package MentorSber.DZ1;
+
+//Задача 3
+//Ввести с клавиатуры номер месяца (1,....12) и вывести на экран время года(зима,...осень). Использовать enum
+
+
+import java.util.Scanner;
+
+public class Zadacha3 {
+
+    enum Months {Январь, Февраль, Март, Апрель, Май, Июнь, Июль, Август, Сентябрь, Октябрь, Ноябрь, Декабрь };
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the month: ");
+        int scanData = scanner.nextInt();
+        int x = 0;
+        for(Months m : Months.values()) {
+            x++;
+            if (x == scanData) {
+                System.out.println("SUCCESS");
+                System.out.println(m.name());
+
+            }
+        }
+    }
+}
