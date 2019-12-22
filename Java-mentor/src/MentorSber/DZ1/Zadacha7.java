@@ -11,22 +11,25 @@ package MentorSber.DZ1;
 
 public class Zadacha7 {
     public static void main(String[] args) {
-       double a = 10;
-       int b = 0;
-       for (int x = 1; x < 100; x++){
-           a = a * 1.1;
-           if (x == 10){
-               System.out.println(" Спортсмен пробежал в 10-й день  "   + Math.round(a) + " км");
-           }
-           if (a > 20 && b == 0){
-               System.out.println(" Спортсмен пробежал больше 20 км в  "   + x + "-й день");
-               b = 1;
-           }
-           if (a > 100 ){
-               System.out.println(" Спортсмен пробежал больше 100 км в  "   + x + "-й день");
-               break;
-           }
+       int dayNumber = 1;
+       double dayDistance = 10;
+       boolean flag = true, finish = false;
+       double sumDistance = 0;
 
+       while (!finish){
+           sumDistance = sumDistance + dayDistance;
+           if (dayNumber == 10){
+               System.out.println(" Спортсмен пробежал в 10-й день  "   + Math.round(dayDistance) + " км");
+           }
+           if (flag && dayDistance > 20 ){
+               System.out.println(" Спортсмен пробежал больше 20 км в  "   + dayNumber + "-й день");
+               flag = false;
+           }
+           if (sumDistance > 100 ){
+               System.out.println(" Спортсмен пробежал больше 100 км в  "   + dayNumber + "-й день");
+               finish = true;
+           }
+           dayDistance = dayDistance * 1.1;
        }
     }
 }

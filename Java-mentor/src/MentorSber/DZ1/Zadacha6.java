@@ -10,106 +10,70 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Zadacha6 {
+
+    private static int MAX_ELEMENT_COUNT = 3;
+    private static int DELTA = 2;
+    static Scanner scanner = new Scanner(System.in);
+
+
     public static void main(String[] args) {
 
         Random random = new Random();
-        Scanner a = new Scanner(System.in);
-        System.out.print("Введите количество предметов: ");
-        int num = a.nextInt();
+         int currentElementCount = getStartElementCount();
+         int currentMaxDelElementCount = getGameMaxDelElementCount(currentElementCount);
 
-        while (num < 3) {
-            System.out.print("Вы ввели неправильное кол-во предметов, повторите попытку: ");
-            num = a.nextInt();
-        }
 
-        Scanner b = new Scanner(System.in);
-        int min = 1;
-        System.out.print("Введите максимальное количество забираемых предметов за ход от 1 до " + (num - 2) + " : ");
-        int max = b.nextInt();
+        while (currentElementCount >= 0) {
 
-        while (max > num - 2 || max < 1) {
-            System.out.print("Вы ввели неправильное кол-во забираемых предметов, повторите попытку: ");
-            max = b.nextInt();
-        }
-        Scanner c = new Scanner(System.in);
+            int currentDelElemCount = getCurrentDelElementCount(currentMaxDelElementCount);
 
-        while (num >= 0) {
-            System.out.print("Игрок введите сколько предметов забрать от 1 до " + max + " : ");
-            int temp = c.nextInt();
-
-            while (temp > max || temp == 0) {
-                System.out.print("Вы ввели неправильное кол-во предметов, повторите попытку: ");
-                temp = c.nextInt();
+            if((currentElementCount - currentDelElemCount) <= currentMaxDelElementCount){
+                    currentMaxDelElementCount = currentElementCount - currentDelElemCount;
             }
-                if((num - temp) <= max){
-                    max = num - temp;
-                }
-                num = num - temp;
+                currentElementCount = currentElementCount - currentDelElemCount;
 
-                if (num == 1){
-                    System.out.println("Осталcя " + num + " предмет");
-                }
-
-                if (num > 1 && num < 5 ){
-                System.out.println("Осталось " + num + " предмета");
-            }
-                if (num > 4){
-                System.out.println("Осталось " + num + " предметов");
-            }
+           printCurrentSituation(currentElementCount);
 
 
-                if (num == 1) {
+            if (currentElementCount == 1) {
                     System.out.println("Компьютер проиграл, забрал последний предмет");
                     break;
-                }
+            }
 
-                System.out.print("Компьютер введите сколько предметов забрать от 1 до " + max + " : ");
+                System.out.print("Компьютер введите сколько предметов забрать от 1 до " + currentMaxDelElementCount + " : ");
 
-                temp = 0;
+                currentDelElemCount = 0;
 
-                while(temp == 0 || temp >= num || temp > max){
-                    if(num == (max + 1)){
-                        temp = max;
+                while(currentDelElemCount == 0 || currentDelElemCount >= currentElementCount
+                        || currentDelElemCount > currentMaxDelElementCount){
+                    if(currentElementCount == (currentMaxDelElementCount + 1)){
+                        currentDelElemCount = currentMaxDelElementCount;
 
-                    } else{
-                        if (num == max){
-                            temp = num - 1;
-                        }else{
-                            if ( temp > max){
-                                temp = 1;
+                    } else if (currentElementCount == currentMaxDelElementCount){
+                            currentDelElemCount = currentElementCount - 1;
+                        }else if ( currentDelElemCount > currentMaxDelElementCount){
+                                currentDelElemCount = 1;
                             }else{
-                                temp = random.nextInt(num);
+                                currentDelElemCount = random.nextInt(currentElementCount);
                             }
                         }
 
-                    }
 
 
+
+
+
+                currentElementCount = currentElementCount - currentDelElemCount;
+
+                System.out.println(currentDelElemCount);
+                if(currentElementCount < currentMaxDelElementCount){
+                    currentMaxDelElementCount = currentElementCount;
                 }
 
-                num = num - temp;
-
-                System.out.println(temp);
-                if(num < max){
-                    max = num;
-                }
+                printCurrentSituation(currentElementCount);
 
 
-                if (num == 1){
-                System.out.println("Остался " + num + " предмет");
-            }
-
-                if (num > 1 && num < 5 ){
-                System.out.println("Осталось " + num + " предмета");
-            }
-
-                if (num > 4){
-                System.out.println("Осталось " + num + " предметов");
-            }
-
-
-
-                if (num == 1) {
+                if (currentElementCount == 1) {
                     System.out.println("Игрок проиграл, забрал последний предмет");
                     break;
                 }
@@ -118,4 +82,53 @@ public class Zadacha6 {
         System.out.println("Game over!!!");
         }
 
+
+
+    private static int getStartElementCount(){
+            System.out.print("Введите количество предметов: ");
+            int startElCount = scanner.nextInt();
+
+            while (startElCount < MAX_ELEMENT_COUNT) {
+                System.out.print("Вы ввели неправильное кол-во предметов, повторите попытку: ");
+                startElCount = scanner.nextInt();
+            }
+            return startElCount;
+        }
+
+    private static int getGameMaxDelElementCount(int startElementCount) {
+        System.out.print("Введите максимальное количество забираемых предметов за ход от 1 до "
+                + (startElementCount - DELTA) + " : ");
+        int currentDelCount = scanner.nextInt();
+
+        int maxDelCount = startElementCount - DELTA;
+        int minDelcount = 1;
+        while (currentDelCount > maxDelCount || currentDelCount < minDelcount) {
+            System.out.print("Вы ввели неправильное кол-во забираемых предметов, повторите попытку: ");
+            currentDelCount = scanner.nextInt();
+        }
+
+        return currentDelCount;
+
     }
+
+    private static  int getCurrentDelElementCount(int gameMaxDelElementCount){
+        System.out.print("Игрок введите сколько предметов забрать от 1 до " + gameMaxDelElementCount + " : ");
+        int currentDelElCount = scanner.nextInt();
+
+        while (currentDelElCount > gameMaxDelElementCount || currentDelElCount == 0) {
+            System.out.print("Вы ввели неправильное кол-во предметов, повторите попытку: ");
+            currentDelElCount = scanner.nextInt();
+        }
+        return currentDelElCount;
+    }
+
+    private static void printCurrentSituation(int currentElementCount){
+        if (currentElementCount == 1){
+            System.out.println("Остался " + currentElementCount + " предмет");
+        } else if (currentElementCount > 1 && currentElementCount < 5 ){
+            System.out.println("Осталось " + currentElementCount + " предмета");
+        } else if (currentElementCount > 4){
+            System.out.println("Осталось " + currentElementCount + " предметов");
+        }
+    }
+}
