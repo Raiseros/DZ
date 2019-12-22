@@ -5,42 +5,24 @@ package MentorSber.DZ1;
 //Ввести с клавиатуры время в формате чч:мм:сс, перевести в секунды и вывести результат на экран (не использовать DateTime API)
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-
+import java.util.Scanner;
 import static java.lang.Integer.parseInt;
 
 public class Zadacha2 {
 
-    public static void main(String[] args) throws IOException, ParseException {
+    public static void main(String[] args){
 
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Введите время в формате чч:мм:сс : \n");
+        String time = sc.nextLine();
 
-        SimpleDateFormat format = new SimpleDateFormat("kk:mm:ss");
+        String[] splitted = time.split(":");
 
-        Date time = null;
-        try {
-            time = format.parse(br.readLine());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        int seconds = (parseInt(splitted[0]) * 3600) + (parseInt(splitted[1]) * 60) + (parseInt(splitted[2]));
 
-        String format2 = new SimpleDateFormat("kk").format(time);
-        int a = parseInt(format2) * 3600;
+        System.out.println(seconds);
 
-        String format3 = new SimpleDateFormat("mm").format(time);
-        int b = parseInt(format3) * 60;
-
-        String format4 = new SimpleDateFormat("ss").format(time);
-        int c = parseInt(format4);
-
-        System.out.println(a + b + c);
     }
 
 }

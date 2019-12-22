@@ -8,15 +8,32 @@ import java.util.Scanner;
 public class Zadacha5 {
     public static void main(String[] args) {
         Scanner a = new Scanner(System.in);
-        int num = a.nextInt();
-        if ( num == 1){
-            System.out.println( num + " рубль");
+        System.out.println("Введите число 0 до 1000 : ");
+        String number = a.nextLine();
+        char tempNumber;
+        char tempNumberTwo = 0;
+
+        if (number.length() == 2){
+           tempNumber  = number.charAt(1);
+           tempNumberTwo  = number.charAt(0);
+
+        } else if (number.length() == 3){
+            tempNumber = number.charAt(2);
+            tempNumberTwo  = number.charAt(1);
+        } else{
+            tempNumber = number.charAt(0);
         }
-        if(num > 1 && num < 5 ){
-            System.out.println( num + " рубля");
-        }
-        if(num == 0 || num > 4 && num <= 1000 ){
-            System.out.println( num + " рублей");
+
+        int deltaNumber =  tempNumber - '0';
+        int deltaNumberTwo = tempNumberTwo - '0';
+
+
+        if (deltaNumber == 1 && deltaNumberTwo != 1){
+            System.out.println( number + " рубль");
+        } else if(deltaNumber > 1 && deltaNumber < 5 && deltaNumberTwo != 1){
+            System.out.println( number + " рубля");
+        } else if(deltaNumber == 0 || deltaNumber > 4){
+            System.out.println( number + " рублей");
         }
 
     }

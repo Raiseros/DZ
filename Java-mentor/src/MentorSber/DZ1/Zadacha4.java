@@ -5,32 +5,60 @@ package MentorSber.DZ1;
 //(Не использовать DateTime API)
 
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+
+import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 
 public class Zadacha4 {
     public static void main(String[] args) {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Введите дату в формате дд.мм.гггг: \n");
+        String date = sc.nextLine();
+        String[] splitted = date.split("\\.");
+        int leapYear = parseInt(splitted[2]) % 4;
+        int year = parseInt(splitted[2]);
+        int days = parseInt(splitted[0]);
+        int months = parseInt(splitted[1]);
 
-        Date time = null;
-        try {
-            time = format.parse(br.readLine());
-        } catch (Exception e) {
-            e.printStackTrace();
+
+
+        if(days == 31){
+            if(months == 12){
+                months = 1;
+                days = 1;
+                year += 1;
+            } else{
+                months += 1;
+                days = 1;
+            }
+
+        } else if(days == 30){
+            if(months == 4 || months == 6 || months == 9 || months == 11){
+                months += 1;
+                days = 1;
+            }
+
+        } else if(days == 29){
+            if(months == 2 && leapYear == 0){
+                months += 1;
+                days = 1;
+            } else {
+                days += 1;
+            }
+
+        } else if(days == 28 && leapYear > 0 && months == 2){
+            months += 1;
+            days = 1;
+            } else{
+            days += 1;
         }
-        Calendar instance = Calendar.getInstance();
-        instance.setTime(time);
-        instance.add(Calendar.DATE,1);
-        Date newDate = instance.getTime();
 
-        System.out.println(new SimpleDateFormat("dd.MM.yyyy").format(newDate));
+        System.out.printf("%02d", days) ;
+        System.out.print(".") ;
+        System.out.printf("%02d", months) ;
+        System.out.print("." + year) ;
 
     }
 }
